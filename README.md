@@ -5,7 +5,9 @@
 Serverless bootstrap for aws lambda running dotnetcore2
 
 Inspired by Serverless aws-csharp 1.0 template
-Inspired by PageUpPeopleOrg https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap
+
+Inspired by [PageUpPeopleOrg] (https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap) Bootstrap Template
+
 HealthCheck Endpoint / Build Scripts / ReadMe
 
 
@@ -29,7 +31,7 @@ Install  [Serverless Framework](http://www.serverless.com)
 npm install serverless -g
 ```
 
-Install dotnet core on your machine. Instructions can be found at (dotnet website)[https://www.microsoft.com/net/download]
+Install dotnet core on your machine. Instructions can be found at [dotnet website](https://www.microsoft.com/net/download)
 
 ## Build
 

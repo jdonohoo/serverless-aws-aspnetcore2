@@ -50,7 +50,7 @@ Linux / Mac via bash
 dotnet test .\Tests
 ```
 
-Output:
+#### Output:
 ```
 Build started, please wait...
 Build completed.
@@ -75,7 +75,7 @@ Test execution time: 1.3748 Seconds
 serverless deploy
 ```
 
-Output:
+#### Output:
 ```
 Serverless: Packaging service...
 Serverless: Uploading CloudFormation file to S3...
@@ -105,7 +105,7 @@ functions:
 curl https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/healthcheck
 ```
 
-Output:
+#### Output:
 ```
 StatusCode        : 200
 StatusDescription : OK

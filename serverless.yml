@@ -28,7 +28,8 @@ provider:
 # you can overwrite defaults here
   stage: dev
   region: us-east-1
-  deploymentBucket: serverless-aws-aspnetcore2-${self:provider.region}-deploys
+  #Make sure this s3 exists 
+  deploymentBucket: ${self:service}-${self:provider.region}-deploys
 
 # you can define service wide environment variables here
   environment:

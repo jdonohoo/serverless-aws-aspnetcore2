@@ -4,7 +4,7 @@
 
 Serverless bootstrap for aws lambda running dotnetcore2
 
-##Credits
+## Credits
 Inspired by Serverless aws-csharp 1.0 template
 
 Inspired by [PageUpPeopleOrg](https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap) Bootstrap Template

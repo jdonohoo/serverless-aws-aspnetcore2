@@ -135,23 +135,22 @@ If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amaz
 AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
 ```
 All functions are deployed with the environment variable: parameterPath
+Because of this block in Serverless.yml:
+```
+  environment:
+	parameterPath: /${self:provider.stage}/${self:service}/settings
+```
 
 ### Settings hierarchy
 ```
 /stage/servicename/settings
 ```
 
-Serverless.yml
-```
-  environment:
-	parameterPath: /${self:provider.stage}/${self:service}/settings
-```
-
 ### Retrieving parameters via aws-cli
 ```
 aws ssm get-parameters-by-path --path /dev/serverless-aws-aspnetcore2/settings --recursive
 ```
-Sample Output:
+#### Sample Output:
 ```
 {
     "Parameters": [
@@ -175,7 +174,7 @@ Sample Output:
 ```
 aws ssm get-parameter --name /dev/serverless-aws-aspnetcore2/settings/TestSecure --with-decryption
 ```
-Sample Output:
+#### Sample Output:
 ```
 {
     "Parameter": {

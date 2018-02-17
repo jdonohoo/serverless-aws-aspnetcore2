@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionitems", "solutionitems", "{298990F4-3571-4EDB-8D34-AD5E425D55C0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+		serverless.yml = serverless.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlers", "Handlers\Handlers.csproj", "{7A3E9438-3B65-4891-B685-CC8DBEC47A57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{656E240D-9117-47E2-8DD8-C51E802A0645}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A3E9438-3B65-4891-B685-CC8DBEC47A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3E9438-3B65-4891-B685-CC8DBEC47A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3E9438-3B65-4891-B685-CC8DBEC47A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A3E9438-3B65-4891-B685-CC8DBEC47A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656E240D-9117-47E2-8DD8-C51E802A0645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656E240D-9117-47E2-8DD8-C51E802A0645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656E240D-9117-47E2-8DD8-C51E802A0645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656E240D-9117-47E2-8DD8-C51E802A0645}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {397AD259-CEC3-4791-9968-FAC6F1ADFE2A}
+	EndGlobalSection
+EndGlobal

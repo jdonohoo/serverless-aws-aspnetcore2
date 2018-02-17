@@ -1,0 +1,56 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+#Inspired by Serverless aws-csharp 1.0 template
+#Inspired by PageUpPeopleOrg https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap
+#HealthCheck Endpoint / Build Scripts / ReadMe
+
+service: serverless-aws-aspnetcore2 # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: dotnetcore2.0
+
+# you can overwrite defaults here
+  stage: dev
+  region: us-east-1
+  deploymentBucket: serverless-aws-aspnetcore2-${self:provider.region}-deploys
+
+# you can define service wide environment variables here
+  environment:
+    #ssm parameter store path
+    parameterPath: /${self:provider.stage}/${self:service}/settings
+
+# you can add packaging information here
+package:
+  artifact: Handlers/bin/release/netcoreapp2.0/publish/deploy-package.zip
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  hello:
+    handler: Handlers::Handlers.Handler::Hello
+  
+  healthcheck:
+    handler: Handlers::Handlers.Handler::HealthCheck
+    events:
+      - http:
+          path: healthcheck
+          method: get
+          cors: true  
+

@@ -24,7 +24,7 @@ Install curl
 choco install curl
 ```
 
-Install  [Serverless Framework](http://www.serverless.com) installed.
+Install  [Serverless Framework](http://www.serverless.com)
 ```
 npm install serverless -g
 ```

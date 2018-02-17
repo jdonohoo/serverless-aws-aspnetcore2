@@ -6,7 +6,7 @@ Serverless bootstrap for aws lambda running dotnetcore2
 
 Inspired by Serverless aws-csharp 1.0 template
 
-Inspired by [PageUpPeopleOrg] (https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap) Bootstrap Template
+Inspired by [PageUpPeopleOrg](https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap) Bootstrap Template
 
 HealthCheck Endpoint / Build Scripts / ReadMe
 
@@ -26,7 +26,7 @@ Install curl
 choco install curl
 ```
 
-Install  [Serverless Framework](http://www.serverless.com)
+Install [Serverless Framework](http://www.serverless.com)
 ```
 npm install serverless -g
 ```
@@ -45,7 +45,7 @@ Linux / Mac via bash
 ./build.sh
 ```
 
-##Testing CommandLine
+## Testing CommandLine
 ```
 dotnet test .\Tests
 ```
@@ -70,7 +70,7 @@ Test Run Successful.
 Test execution time: 1.3748 Seconds
 ```
 
-##Deploying CommandLine
+## Deploying CommandLine
 ```
 serverless deploy
 ```

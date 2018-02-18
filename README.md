@@ -160,13 +160,21 @@ I make a service role for Lambda called `micro-service` with the following polic
     ]
 }
 ```
-Paste the full ARN into the serverless.yml
-I have it called out under provider:
+Paste the full ARN into the serverless.yml, I have it called out under provider:
+
+
 `role: arn:aws:iam::723027765751:role/service-role/micro-service`
 ### Settings hierarchy
 ```
 /stage/servicename/settings
 ```
+### Accessing SSM Parameters via Code
+```
+AppConfig.Instance.Parameters["TestString"];
+AppConfig.Instance.Parameters["TestSecure"]; 
+```
+Secure strings will automatically be pulled down decrypted.
+
 
 ### Retrieving parameters via aws-cli
 ```

@@ -10,6 +10,8 @@ Inspired by Serverless aws-csharp 1.0 template
 Inspired by [PageUpPeopleOrg](https://github.com/PageUpPeopleOrg/serverless-microservice-bootstrap) Bootstrap Template
 HealthCheck Endpoint / Build Scripts / ReadMe
 
+Need help with the cloud? Check us out over at [Observian](https://www.observian.com).
+
 
 ## Getting Started
 

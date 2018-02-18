@@ -31,6 +31,8 @@ Install [Serverless Framework](http://www.serverless.com)
 npm install serverless -g
 ```
 
+Configure the aws-cli if you haven't already. [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+
 Install dotnet core on your machine. Instructions can be found at [dotnet website](https://www.microsoft.com/net/download)
 
 ## Build

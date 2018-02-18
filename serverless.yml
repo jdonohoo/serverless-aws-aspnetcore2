@@ -26,15 +26,23 @@ provider:
   runtime: dotnetcore2.0
 
 # you can overwrite defaults here
-  stage: dev
-  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
   #Make sure this s3 exists 
   deploymentBucket: ${self:service}-${self:provider.region}-deploys
+
+custom:
+    dev: Development
+    stage: Staging
+    prod: Production
 
 # you can define service wide environment variables here
   environment:
     #ssm parameter store path
-    parameterPath: /${self:provider.stage}/${self:service}/settings
+    region: ${opt:region, 'us-east-1'}
+    serviceName: ${self:service}
+    parameterPath: /${self:provider.stage}/${self:service}/settings/
+    ASPNETCORE_ENVIRONMENT: ${self:custom.${opt:stage,  self:provider.stage}}
 
 # you can add packaging information here
 package:

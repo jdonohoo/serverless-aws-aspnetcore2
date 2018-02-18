@@ -162,6 +162,23 @@ I make a service role for Lambda called `micro-service` with the following polic
     ]
 }
 ```
+As well as (CloudWatchLogsFullAcces)
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "logs:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 Paste the full ARN into the serverless.yml, I have it called out under provider:
 
 

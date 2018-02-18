@@ -20,6 +20,10 @@ service: serverless-aws-aspnetcore2 # NOTE: update this with your service name
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
+custom:
+ dev: Development
+ stage: Staging
+ prod: Production
 
 provider:
   name: aws
@@ -31,10 +35,7 @@ provider:
   #Make sure this s3 exists 
   deploymentBucket: ${self:service}-${self:provider.region}-deploys
 
-custom:
-    dev: Development
-    stage: Staging
-    prod: Production
+
 
 # you can define service wide environment variables here
   environment:

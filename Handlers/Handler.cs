@@ -1,5 +1,6 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using Handlers.Helpers;
 using Handlers.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace Handlers
         public Response Hello(Request request, ILambdaContext context)
         {
             context.Logger.LogLine($"{context.FunctionName} execution started");
+            context.Logger.LogLine($"TestString: {AppConfig.Instance.Parameters["TestString"]}");
+            context.Logger.LogLine($"TestSecure: {AppConfig.Instance.Parameters["TestSecure"]}");
+
             return new Response { Message = "Hello World, serverless-aws-aspnetcore2!" };
         }
 

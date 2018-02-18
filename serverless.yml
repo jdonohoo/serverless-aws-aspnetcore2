@@ -28,6 +28,8 @@ custom:
 provider:
   name: aws
   runtime: dotnetcore2.0
+  #replace this with your lambda role / remove to use default
+  role: arn:aws:iam::723027765751:role/service-role/micro-service
 
 # you can overwrite defaults here
   stage: ${opt:stage, 'dev'}

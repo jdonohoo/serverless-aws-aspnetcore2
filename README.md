@@ -142,7 +142,27 @@ Because of this block in Serverless.yml:
   environment:
 	parameterPath: /${self:provider.stage}/${self:service}/settings
 ```
-
+### Lambda Role
+I make a service role for Lambda called `micro-service` with the following policy: (SSM ReadOnly)
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:Describe*",
+                "ssm:Get*",
+                "ssm:List*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+Paste the full ARN into the serverless.yml
+I have it called out under provider:
+`role: arn:aws:iam::723027765751:role/service-role/micro-service`
 ### Settings hierarchy
 ```
 /stage/servicename/settings

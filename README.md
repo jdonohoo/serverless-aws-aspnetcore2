@@ -162,7 +162,7 @@ I make a service role for Lambda called `micro-service` with the following polic
     ]
 }
 ```
-As well as (CloudWatchLogsFullAcces)
+As well as (CloudWatchLogsFullAccess)
 
 ```
 {

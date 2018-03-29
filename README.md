@@ -77,6 +77,7 @@ Because of this block in Serverless.yml:
 ```
 ### Lambda Role
 Check original read me for specific policies, moved these to inline statements in serverless.yml
+
 Under the provider section:
 ```
   iamRoleStatements:

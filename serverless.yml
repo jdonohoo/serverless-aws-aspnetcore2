@@ -61,6 +61,7 @@ provider:
          - "ssm:Describe*"
          - "ssm:Get*"
          - "ssm:List*"
+         - "kms:Decrypt"
        Resource: "*"
 
   #replace this with your lambda role / remove to use default

@@ -110,6 +110,7 @@ Under the provider section:
          - "ssm:Describe*"
          - "ssm:Get*"
          - "ssm:List*"
+         - "kms:Decrypt"
        Resource: "*"
 ```
 

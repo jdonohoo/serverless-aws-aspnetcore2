@@ -40,6 +40,8 @@ Install Node
 
 Install Serverless Framework
 
+### AWS CLI
+
 Configure the aws-cli if you haven't already. [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 
 Install dotnet core on your machine. Instructions can be found at [dotnet website](https://www.microsoft.com/net/download)
@@ -60,7 +62,104 @@ Linux via bash
 ```
 ./build.sh
 ```
+## Configuration SSM
+If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amazon.com/blogs/mt/organize-parameters-by-hierarchy-tags-or-amazon-cloudwatch-events-with-amazon-ec2-systems-manager-parameter-store/)
 
+### How to get there:
+```
+AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
+```
+All functions are deployed with the environment variable: parameterPath
+Because of this block in Serverless.yml:
+```
+  environment:
+	parameterPath: /${self:provider.stage}/${self:service}/settings
+```
+### Lambda Role
+Check original read me for specific policies, moved these to inline statements in serverless.yml
+Under the provider section:
+```
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:ListBucket"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+             - "/*"
+    -  Effect: "Allow"
+       Action:
+         - "logs:*"
+       Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "ssm:Describe*"
+         - "ssm:Get*"
+         - "ssm:List*"
+       Resource: "*"
+```
+
+### Settings hierarchy
+```
+/stage/servicename/settings
+```
+### Accessing SSM Parameters via Code
+```
+AppConfig.Instance.GetParameter("TestString");
+AppConfig.Instance.GetParameter("TestSecure"); 
+```
+Secure strings will automatically be pulled down decrypted.
+
+
+### Retrieving parameters via aws-cli
+```
+aws ssm get-parameters-by-path --path /dev/serverless-aws-aspnetcore2/settings --recursive
+```
+#### Sample Output:
+```
+{
+    "Parameters": [
+        {
+            "Version": 1,
+            "Type": "SecureString",
+            "Name": "/dev/serverless-aws-aspnetcore2/settings/TestSecure",
+            "Value": "AQICAHj7GTUMLLb+voz+gUUoBAz/KGeLrbKNq+UgF9HcIvhrEAF4vJD/XTYbCpOmfJuONQn9AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMzEPiqs2fSMS8JSKmAgEQgDNPeZzlA/ljsgxcmFni0rPIG876l7hgHlU3xJrIwwUAHKGIXs68dArewJrPGYlV3jMWV1s="
+        },
+        {
+            "Version": 1,
+            "Type": "String",
+            "Name": "/dev/serverless-aws-aspnetcore2/settings/TestString",
+            "Value": "Some Test String"
+        }
+    ]
+}
+```
+
+### Retrieve secured values via aws-cli
+```
+aws ssm get-parameter --name /dev/serverless-aws-aspnetcore2/settings/TestSecure --with-decryption
+```
+#### Sample Output:
+```
+{
+    "Parameter": {
+        "Version": 1,
+        "Type": "SecureString",
+        "Name": "/dev/serverless-aws-aspnetcore2/settings/TestSecure",
+        "Value": "Secure string test value"
+    }
+}
+```
 ## Testing CommandLine
 ```
 dotnet test .\Tests
@@ -143,105 +242,4 @@ RawContentLength  : 2
 
 
 
-## Configuration SSM
-If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amazon.com/blogs/mt/organize-parameters-by-hierarchy-tags-or-amazon-cloudwatch-events-with-amazon-ec2-systems-manager-parameter-store/)
 
-### How to get there:
-```
-AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
-```
-All functions are deployed with the environment variable: parameterPath
-Because of this block in Serverless.yml:
-```
-  environment:
-	parameterPath: /${self:provider.stage}/${self:service}/settings
-```
-### Lambda Role
-Check original read me for specific policies, moved these to inline statements in serverless.yml
-Under the provider section:
-```
-  iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:ListBucket"
-       Resource:
-         Fn::Join:
-           - ""
-           - - "arn:aws:s3:::"
-             - "${self:provider.deploymentBucket}"
-    -  Effect: "Allow"
-       Action:
-         - "s3:PutObject"
-       Resource:
-         Fn::Join:
-           - ""
-           - - "arn:aws:s3:::"
-             - "${self:provider.deploymentBucket}"
-             - "/*"
-    -  Effect: "Allow"
-       Action:
-         - "logs:*"
-       Resource: "*"
-    -  Effect: "Allow"
-       Action:
-         - "ssm:Describe*"
-         - "ssm:Get*"
-         - "ssm:List*"
-       Resource: "*"
-```
-
-Paste the full ARN into the serverless.yml, I have it called out under provider:
-
-
-`role: arn:aws:iam::723027765751:role/service-role/micro-service`
-### Settings hierarchy
-```
-/stage/servicename/settings
-```
-### Accessing SSM Parameters via Code
-```
-AppConfig.Instance.GetParameter("TestString");
-AppConfig.Instance.GetParameter("TestSecure"); 
-```
-Secure strings will automatically be pulled down decrypted.
-
-
-### Retrieving parameters via aws-cli
-```
-aws ssm get-parameters-by-path --path /dev/serverless-aws-aspnetcore2/settings --recursive
-```
-#### Sample Output:
-```
-{
-    "Parameters": [
-        {
-            "Version": 1,
-            "Type": "SecureString",
-            "Name": "/dev/serverless-aws-aspnetcore2/settings/TestSecure",
-            "Value": "AQICAHj7GTUMLLb+voz+gUUoBAz/KGeLrbKNq+UgF9HcIvhrEAF4vJD/XTYbCpOmfJuONQn9AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMzEPiqs2fSMS8JSKmAgEQgDNPeZzlA/ljsgxcmFni0rPIG876l7hgHlU3xJrIwwUAHKGIXs68dArewJrPGYlV3jMWV1s="
-        },
-        {
-            "Version": 1,
-            "Type": "String",
-            "Name": "/dev/serverless-aws-aspnetcore2/settings/TestString",
-            "Value": "Some Test String"
-        }
-    ]
-}
-```
-
-### Retrieve secured values via aws-cli
-```
-aws ssm get-parameter --name /dev/serverless-aws-aspnetcore2/settings/TestSecure --with-decryption
-```
-#### Sample Output:
-```
-{
-    "Parameter": {
-        "Version": 1,
-        "Type": "SecureString",
-        "Name": "/dev/serverless-aws-aspnetcore2/settings/TestSecure",
-        "Value": "Secure string test value"
-    }
-}
-```

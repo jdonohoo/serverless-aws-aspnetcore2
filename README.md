@@ -157,38 +157,37 @@ Because of this block in Serverless.yml:
 	parameterPath: /${self:provider.stage}/${self:service}/settings
 ```
 ### Lambda Role
-I make a service role for Lambda called `micro-service` with the following policy: (SSM ReadOnly)
+Check original read me for specific policies, moved these to inline statements in serverless.yml
+Under the provider section:
 ```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssm:Describe*",
-                "ssm:Get*",
-                "ssm:List*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-As well as (CloudWatchLogsFullAccess)
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "logs:*"
-            ],
-            "Effect": "Allow",
-            "Resource": "*"
-        }
-    ]
-}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:ListBucket"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+             - "/*"
+    -  Effect: "Allow"
+       Action:
+         - "logs:*"
+       Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "ssm:Describe*"
+         - "ssm:Get*"
+         - "ssm:List*"
+       Resource: "*"
 ```
 
 Paste the full ARN into the serverless.yml, I have it called out under provider:
@@ -201,8 +200,8 @@ Paste the full ARN into the serverless.yml, I have it called out under provider:
 ```
 ### Accessing SSM Parameters via Code
 ```
-AppConfig.Instance.Parameters["TestString"];
-AppConfig.Instance.Parameters["TestSecure"]; 
+AppConfig.Instance.GetParameter("TestString");
+AppConfig.Instance.GetParameter("TestSecure"); 
 ```
 Secure strings will automatically be pulled down decrypted.
 

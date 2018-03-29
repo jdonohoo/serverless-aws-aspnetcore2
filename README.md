@@ -12,6 +12,7 @@ HealthCheck Endpoint / Build Scripts / ReadMe
 
 Need help with the cloud? Check us out over at [Observian](https://www.observian.com).
 
+[Original ReadMe](https://github.com/jdonohoo/serverless-aws-aspnetcore2/blob/master/README-original.md)
 
 ## Getting Started
 
@@ -32,6 +33,12 @@ Install [Serverless Framework](http://www.serverless.com)
 ```
 npm install serverless -g
 ```
+### OSX
+Install Homebrew
+
+Install Node
+
+Install Serverless Framework
 
 Configure the aws-cli if you haven't already. [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 
@@ -44,7 +51,12 @@ Windows via powershell
 build.ps1
 ```
 
-Linux / Mac via bash
+OSX via bash
+```
+sh ./build-osx.sh
+```
+
+Linux via bash
 ```
 ./build.sh
 ```

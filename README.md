@@ -113,7 +113,7 @@ Under the provider section:
        Resource: "*"
 ```
 
-## Configuration SSM
+## Application Configuration via SSM Parameter Store
 If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amazon.com/blogs/mt/organize-parameters-by-hierarchy-tags-or-amazon-cloudwatch-events-with-amazon-ec2-systems-manager-parameter-store/)
 
 ### How to get there:

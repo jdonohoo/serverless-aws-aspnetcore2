@@ -78,30 +78,6 @@ Linux via bash
 ```
 ./build.sh
 ```
-## Configuration SSM
-If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amazon.com/blogs/mt/organize-parameters-by-hierarchy-tags-or-amazon-cloudwatch-events-with-amazon-ec2-systems-manager-parameter-store/)
-
-### How to get there:
-```
-AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
-```
-All functions are deployed with the environment variable: parameterPath
-
-Because of this block in Serverless.yml:
-```
-  environment:
-	parameterPath: /${self:provider.stage}/${self:service}/settings
-```
-
-Configure the following variables, or unit tests will fail later on:
-
-`/dev/serverless-aws-aspnetcore2/settings/TestString` 
-This can be any value
-
-
-`/dev/serverless-aws-aspnetcore2/settings/TestSecure` 
-This can be any value but select secure string to encrypt it.
-
 ### Lambda Role
 Check original read me for specific policies, moved these to inline statements in serverless.yml
 
@@ -136,6 +112,31 @@ Under the provider section:
          - "ssm:List*"
        Resource: "*"
 ```
+
+## Configuration SSM
+If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amazon.com/blogs/mt/organize-parameters-by-hierarchy-tags-or-amazon-cloudwatch-events-with-amazon-ec2-systems-manager-parameter-store/)
+
+### How to get there:
+```
+AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
+```
+All functions are deployed with the environment variable: parameterPath
+
+Because of this block in Serverless.yml:
+```
+  environment:
+	parameterPath: /${self:provider.stage}/${self:service}/settings
+```
+
+Configure the following variables, or unit tests will fail later on:
+
+`/dev/serverless-aws-aspnetcore2/settings/TestString` 
+This can be any value
+
+
+`/dev/serverless-aws-aspnetcore2/settings/TestSecure` 
+This can be any value but select secure string to encrypt it.
+
 
 ### Settings hierarchy
 ```

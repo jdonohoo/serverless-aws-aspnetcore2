@@ -16,6 +16,7 @@ namespace Handlers
             context.Logger.LogLine($"{context.FunctionName} execution started");
             context.Logger.LogLine($"TestString: {AppConfig.Instance.GetParameter("TestString")}");
             context.Logger.LogLine($"TestSecure: {AppConfig.Instance.GetParameter("TestSecure")}");
+            context.Logger.LogLine($"Region: {Environment.GetEnvironmentVariable("region")}");
             return new Response { Message = "Hello World, serverless-aws-aspnetcore2!" };
         }
 

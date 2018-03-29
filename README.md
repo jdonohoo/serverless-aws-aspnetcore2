@@ -75,6 +75,11 @@ Because of this block in Serverless.yml:
   environment:
 	parameterPath: /${self:provider.stage}/${self:service}/settings
 ```
+
+Configure the following variables, or unit tests will fail later on:
+`/dev/serverless-aws-aspnetcore2/settings/TestString` This can be any value
+`/dev/serverless-aws-aspnetcore2/settings/TestSecure` This can be any value but select secure string to encrypt it.
+
 ### Lambda Role
 Check original read me for specific policies, moved these to inline statements in serverless.yml
 

@@ -273,6 +273,15 @@ ParsedHtml        : mshtml.HTMLDocumentClass
 RawContentLength  : 2
 ```
 
+### Invoking via CommandLine
+```
+serverless invoke -f healthcheck
+```
+
+```
+serverless invoke -f hello
+```
+
 
 
 

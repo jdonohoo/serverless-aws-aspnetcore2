@@ -33,14 +33,30 @@ Install [Serverless Framework](http://www.serverless.com)
 ```
 npm install serverless -g
 ```
+
+Install AWS CLI
+```
+choco install awscli
+```
 ### OSX
-Install Homebrew
+Install [Homebrew](https://brew.sh/)
 
 Install Node
+```
+brew install node
+```
 
-Install Serverless Framework
+Install [Serverless Framework](http://www.serverless.com)
+```
+npm install serverless -g
+```
 
-### AWS CLI
+Install AWS CLI
+```
+brew install awscli
+```
+
+### AWS CLI Configuration
 
 Configure the aws-cli if you haven't already. [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 
@@ -70,6 +86,7 @@ If you aren't familar with AWS SSM Parameter Store start [here](https://aws.amaz
 AWSConsole > EC2 > Parameter Store (Bottom left corner scroll down)
 ```
 All functions are deployed with the environment variable: parameterPath
+
 Because of this block in Serverless.yml:
 ```
   environment:

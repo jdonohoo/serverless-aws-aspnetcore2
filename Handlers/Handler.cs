@@ -14,9 +14,8 @@ namespace Handlers
         public Response Hello(Request request, ILambdaContext context)
         {
             context.Logger.LogLine($"{context.FunctionName} execution started");
-            context.Logger.LogLine($"TestString: {AppConfig.Instance.Parameters["TestString"]}");
-            context.Logger.LogLine($"TestSecure: {AppConfig.Instance.Parameters["TestSecure"]}");
-
+            context.Logger.LogLine($"TestString: {AppConfig.Instance.GetParameter("TestString")}");
+            context.Logger.LogLine($"TestSecure: {AppConfig.Instance.GetParameter("TestSecure")}");
             return new Response { Message = "Hello World, serverless-aws-aspnetcore2!" };
         }
 

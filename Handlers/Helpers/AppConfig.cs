@@ -17,9 +17,7 @@ namespace Handlers.Helpers
         public string ServiceName => Environment.GetEnvironmentVariable("serviceName") ?? "serverless-aws-aspnetcore2";
         public string ParameterPath => Environment.GetEnvironmentVariable("parameterPath") ?? "/dev/serverless-aws-aspnetcore2/settings/";
 
-        public string TestString { get; set; }
-        public string TestSecure { get; set; }
-        public Dictionary<string,string> Parameters { get; set; }
+        private Dictionary<string, string> Parameters { get; set; }
 
         [JsonIgnore]
         private static volatile AppConfig _instance;
@@ -56,26 +54,41 @@ namespace Handlers.Helpers
             var task = client.GetParametersByPathAsync(request);
             task.Wait();
 
-            var paramList  = task.Result.Parameters;
-            foreach(var p in paramList)
+            var paramList = task.Result.Parameters;
+            foreach (var p in paramList)
             {
                 string name = p.Name.Replace(ParameterPath, string.Empty);
                 string value = p.Value;
 
-                if(p.Type == ParameterType.SecureString)
+                if (p.Type == ParameterType.SecureString)
                 {
-                    var paramRequest = new GetParameterRequest();
-                    paramRequest.Name = p.Name;
-                    paramRequest.WithDecryption = true;
+                    var paramRequest = new GetParameterRequest
+                    {
+                        Name = p.Name,
+                        WithDecryption = true
+                    };
                     var t = client.GetParameterAsync(paramRequest);
                     t.Wait();
                     value = t.Result.Parameter.Value;
                 }
                 Parameters.Add(name, value);
             }
-            
-            
+
+
         }
-         
+
+        public string GetParameter(string name)
+        {
+            try
+            {
+                return Parameters[name];
+            }
+            catch (Exception)
+            {
+                throw new Exception($"{name} not found in parameter dictionary check: {Instance.ParameterPath}{name} is in SSM Parameter Store.");
+            }
+
+        }
+
     }
 }

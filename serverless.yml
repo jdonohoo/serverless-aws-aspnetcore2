@@ -28,14 +28,45 @@ custom:
 provider:
   name: aws
   runtime: dotnetcore2.0
-  #replace this with your lambda role / remove to use default
-  role: arn:aws:iam::723027765751:role/service-role/micro-service
-
-# you can overwrite defaults here
+  # you can overwrite defaults here
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
   #Make sure this s3 exists 
   deploymentBucket: ${self:service}-${self:provider.region}-deploys
+
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:ListBucket"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - "${self:provider.deploymentBucket}"
+             - "/*"
+    -  Effect: "Allow"
+       Action:
+         - "logs:*"
+       Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "ssm:Describe*"
+         - "ssm:Get*"
+         - "ssm:List*"
+       Resource: "*"
+
+  #replace this with your lambda role / remove to use default
+  #role: arn:aws:iam::723027765751:role/service-role/micro-service
+
+
 
 
 

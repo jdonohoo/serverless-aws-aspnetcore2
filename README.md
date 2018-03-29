@@ -79,7 +79,7 @@ Linux via bash
 ./build.sh
 ```
 ### Lambda Role
-Check original read me for specific policies, moved these to inline statements in serverless.yml
+Check the [original ReadMe](https://github.com/jdonohoo/serverless-aws-aspnetcore2/blob/master/README-original.md) for specific policies, moved these to inline statements in serverless.yml
 
 Under the provider section:
 ```

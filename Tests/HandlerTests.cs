@@ -49,8 +49,8 @@ namespace Tests
 
             Assert.Equal("serverless-aws-aspnetcore2", AppConfig.Instance.ServiceName);
             Assert.Equal($"/{stage}/serverless-aws-aspnetcore2/settings/", AppConfig.Instance.ParameterPath);
-            Assert.Equal("Secure string test value", AppConfig.Instance.GetParameter("TestSecure"));
-            Assert.Equal("Some Test String", AppConfig.Instance.GetParameter("TestString"));
+            Assert.NotEmpty(AppConfig.Instance.GetParameter("TestSecure"));
+            Assert.NotEmpty(AppConfig.Instance.GetParameter("TestString"));
         }
     }
 }

@@ -52,7 +52,8 @@ namespace Handlers.Helpers
             var request = new GetParametersByPathRequest
             {
                 Path = ParameterPath,
-                Recursive = true
+                Recursive = true,
+                WithDecryption = true
             };
 
             var task = client.GetParametersByPathAsync(request);
@@ -72,24 +73,10 @@ namespace Handlers.Helpers
             }
             
 
-            
-
             foreach(var p in paramList)
             {
                 string name = p.Name.Replace(ParameterPath, string.Empty);
                 string value = p.Value;
-
-                if (p.Type == ParameterType.SecureString)
-                {
-                    var paramRequest = new GetParameterRequest
-                    {
-                        Name = p.Name,
-                        WithDecryption = true
-                    };
-                    var t = client.GetParameterAsync(paramRequest);
-                    t.Wait();
-                    value = t.Result.Parameter.Value;
-                }
                 Parameters.Add(name, value);
             }
 

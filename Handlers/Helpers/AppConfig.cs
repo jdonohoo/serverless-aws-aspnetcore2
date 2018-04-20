@@ -44,7 +44,7 @@ namespace Handlers.Helpers
         private AppConfig()
         {
             List<Parameter> paramList = new List<Parameter>();
-            string NextToken = string.Empty;
+            string nextToken = string.Empty;
 
             Parameters = new Dictionary<string, string>();
             var client = new AmazonSimpleSystemsManagementClient(RegionEndpoint.GetBySystemName(Region));
@@ -60,16 +60,16 @@ namespace Handlers.Helpers
             task.Wait();
 
             paramList.AddRange(task.Result.Parameters);
-            NextToken = task.Result.NextToken;
+            nextToken = task.Result.NextToken;
 
-            while(!string.IsNullOrEmpty(NextToken))
+            while(!string.IsNullOrEmpty(nextToken))
             {
-                request.NextToken = NextToken;
+                request.NextToken = nextToken;
                 task = client.GetParametersByPathAsync(request);
                 task.Wait();
 
                 paramList.AddRange(task.Result.Parameters);
-                NextToken = task.Result.NextToken;
+                nextToken = task.Result.NextToken;
             }
             
 

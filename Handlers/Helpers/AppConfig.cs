@@ -17,8 +17,6 @@ namespace Handlers.Helpers
         public string ServiceName => Environment.GetEnvironmentVariable("serviceName") ?? "serverless-aws-aspnetcore2";
         public string ParameterPath => Environment.GetEnvironmentVariable("parameterPath") ?? "/dev/serverless-aws-aspnetcore2/settings/";
 
-        public string TestString { get; set; }
-        public string TestSecure { get; set; }
         public Dictionary<string,string> Parameters { get; set; }
 
         [JsonIgnore]
@@ -28,6 +26,7 @@ namespace Handlers.Helpers
         [JsonIgnore]
         public static AppConfig Instance
         {
+            
             get
             {
                 if (_instance != null) return _instance;
@@ -44,6 +43,9 @@ namespace Handlers.Helpers
 
         private AppConfig()
         {
+            List<Parameter> paramList = new List<Parameter>();
+            string NextToken = string.Empty;
+
             Parameters = new Dictionary<string, string>();
             var client = new AmazonSimpleSystemsManagementClient(RegionEndpoint.GetBySystemName(Region));
 
@@ -56,7 +58,22 @@ namespace Handlers.Helpers
             var task = client.GetParametersByPathAsync(request);
             task.Wait();
 
-            var paramList  = task.Result.Parameters;
+            paramList.AddRange(task.Result.Parameters);
+            NextToken = task.Result.NextToken;
+
+            while(!string.IsNullOrEmpty(NextToken))
+            {
+                request.NextToken = NextToken;
+                task = client.GetParametersByPathAsync(request);
+                task.Wait();
+
+                paramList.AddRange(task.Result.Parameters);
+                NextToken = task.Result.NextToken;
+            }
+            
+
+            
+
             foreach(var p in paramList)
             {
                 string name = p.Name.Replace(ParameterPath, string.Empty);
